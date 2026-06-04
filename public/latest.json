@@ -1,15 +1,15 @@
 {
-  "version": "0.2.0",
-  "notes": "默认小女孩形象，零成本上手。新增自动更新、独立设置页。修复多个 UI bug（dock 唤起、错误提示残留、镜像翻转）。",
-  "pub_date": "2026-06-03T08:55:00Z",
+  "version": "0.2.1",
+  "notes": "修复桌宠在 Chrome / 视频原生全屏时消失。修复鼠标 hover 不显示小手 cursor。",
+  "pub_date": "2026-06-04T03:25:00Z",
   "platforms": {
     "darwin-x86_64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSeXJyTGVmODlqb3JGbk81c2IwVzBGcFRHZzJSUjQvMzNxUEppby94djBRT0RuRFpRcDJnMlhxcjFEOXkyVFQ3cXQxVGxPc0dSU2JTV0g2aVdlZER3Tk1vTlBZanh0elF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgwNDkwOTI0CWZpbGU6RGVza3RvcCBQZXQuYXBwLnRhci5negpOVi9ZZjlwK3Foditkc0ZLVlVja2Q1Q29ZaXI4Q0tsRTl6dDBSdW9sd2xQcmJkVXdkMHJqelZtMXB4Nks0ZFBNczRITlVlazN6NVZIZTRnZFJmVk9Bdz09Cg==",
-      "url": "https://my-pet-heart.vercel.app/Desktop-Pet-0.2.0.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSeXJyTGVmODlqb29nTEdQbjZVQ0UxYjcwOXd0VGR5clJHVFZWNTBORDNUUVFtQWJiMFhUVjFLSklVZThZK2xhWmdyMnFxbmJucEhSRHduNE92NVdORzJuQ1I5dmt3OHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgwNTQyOTkxCWZpbGU6RGVza3RvcCBQZXQuYXBwLnRhci5negpUaDYwaTdwSCtqSmZlTm1DcWRlZ1Rsa2tFYlFNaWRMNTFkWmZCMkJwOFdJdkxwVkk1bzN3Q3Jkc2lhcWFYd3RrcndnbVVWaUVWdVZNMEo4dkpLbWFDUT09Cg==",
+      "url": "https://my-pet-heart.vercel.app/Desktop-Pet-0.2.1.app.tar.gz"
     },
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSeXJyTGVmODlqb3JGbk81c2IwVzBGcFRHZzJSUjQvMzNxUEppby94djBRT0RuRFpRcDJnMlhxcjFEOXkyVFQ3cXQxVGxPc0dSU2JTV0g2aVdlZER3Tk1vTlBZanh0elF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgwNDkwOTI0CWZpbGU6RGVza3RvcCBQZXQuYXBwLnRhci5negpOVi9ZZjlwK3Foditkc0ZLVlVja2Q1Q29ZaXI4Q0tsRTl6dDBSdW9sd2xQcmJkVXdkMHJqelZtMXB4Nks0ZFBNczRITlVlazN6NVZIZTRnZFJmVk9Bdz09Cg==",
-      "url": "https://my-pet-heart.vercel.app/Desktop-Pet-0.2.0.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVSeXJyTGVmODlqb29nTEdQbjZVQ0UxYjcwOXd0VGR5clJHVFZWNTBORDNUUVFtQWJiMFhUVjFLSklVZThZK2xhWmdyMnFxbmJucEhSRHduNE92NVdORzJuQ1I5dmt3OHc4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzgwNTQyOTkxCWZpbGU6RGVza3RvcCBQZXQuYXBwLnRhci5negpUaDYwaTdwSCtqSmZlTm1DcWRlZ1Rsa2tFYlFNaWRMNTFkWmZCMkJwOFdJdkxwVkk1bzN3Q3Jkc2lhcWFYd3RrcndnbVVWaUVWdVZNMEo4dkpLbWFDUT09Cg==",
+      "url": "https://my-pet-heart.vercel.app/Desktop-Pet-0.2.1.app.tar.gz"
     }
   }
 }

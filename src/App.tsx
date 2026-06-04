@@ -8,9 +8,9 @@ import { DownloadSection } from "./components/DownloadSection";
 
 const GITHUB_URL = "https://github.com/ristar-h/desktop-pet";
 // 下载链接指向同源静态资源（public 目录下的 dmg），点击后浏览器原地下载
-const DOWNLOAD_URL = "/Desktop-Pet-0.2.0.dmg";
-const DOWNLOAD_FILENAME = "Desktop-Pet-0.2.0.dmg";
-const VERSION = "0.2.0";
+const DOWNLOAD_URL = "/Desktop-Pet-0.2.1.dmg";
+const DOWNLOAD_FILENAME = "Desktop-Pet-0.2.1.dmg";
+const VERSION = "0.2.1";
 const FILE_SIZE = "12.6 MB";
 
 const SECTIONS = [
