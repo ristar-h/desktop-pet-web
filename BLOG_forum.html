@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN" style='margin:0; padding:0; background:#FFF; color:#3F3936; font-family:"Georgia", "Songti SC", "STSong", "宋体", "SimSun", serif; font-size:16.5px; line-height:1.85; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale'>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>做一个会陪我上班的桌宠</title>
+
+</head>
+<body style='margin:0; padding:0; background:#FFF; color:#3F3936; font-family:"Georgia", "Songti SC", "STSong", "宋体", "SimSun", serif; font-size:16.5px; line-height:1.85; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale'>
+
+<article style="max-width:700px; margin:0 auto; padding:80px 28px 120px">
+
+  <h1 style="font-size:30px; font-weight:600; color:#2A2422; text-align:center; margin:0 0 12px; letter-spacing:0.5px" align="center">做一个会陪我上班的桌宠</h1>
+  <div style="text-align:center; color:#9A8E82; font-size:13px; font-style:italic; margin:0 0 56px; letter-spacing:1px" align="center">一个周末项目 · 关于桌面陪伴这件小事</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>起因</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">在codex把桌宠做出来之前，我就一直想做一个桌面陪伴的应用，因为工作本身已经比较严肃烧脑了，可以适当来点整活的、有意思的小东西添添乐子。我想要一个可爱的、可以复刻我家人样子的 Q 版小角色，不太大、不抢镜，安安静静地待在屏幕角落，偶尔走两步、偶尔睡觉、偶尔开心地蹦跳一下。让上班这件事多一点温度，让我工作时的思念有一份落脚处。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">然后我花了周六一天的时间，终于把这个做出来啦～</p>
+
+  <figure style="margin:32px 0; text-align:center;"><a href="https://my-pet-heart.vercel.app/%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91.mp4" target="_blank" rel="noopener" style="color:#C4704B; text-decoration:none; border-bottom:1px solid rgba(196, 112, 75, 0.4); padding-bottom:1px; transition:border-color 0.2s ease; display:inline-block; position:relative; max-width:100%"><img src="https://my-pet-heart.vercel.app/%E6%BC%94%E7%A4%BA%E8%A7%86%E9%A2%91%E5%B0%81%E9%9D%A2.jpg" alt="演示视频封面" style="max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF;"><span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:72px; height:72px; border-radius:50%; background:rgba(0,0,0,0.55); box-shadow:0 4px 14px rgba(0,0,0,0.25);"></span><span style="position:absolute; top:50%; left:50%; transform:translate(-40%,-50%); width:0; height:0; border-left:20px solid #FFFDF8; border-top:13px solid transparent; border-bottom:13px solid transparent;"></span></a><figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; font-style:italic; line-height:1.6; padding:0 8px;">真机演示：上传照片生成 Q 版形象、切换形象、走路 / 睡觉 / 开心 / 拖拽 等状态在桌面上的实际表现。<br>（点上图可在新窗口播放视频；也可以直接访问 <a href="https://my-pet-heart.vercel.app/" target="_blank" rel="noopener" style="color:#C4704B; text-decoration:none; border-bottom:1px solid rgba(196, 112, 75, 0.3); padding-bottom:1px; transition:border-color 0.2s ease">my-pet-heart.vercel.app</a>）</figcaption></figure>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>规划</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">一开始我就想，要做就做轻一点。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">我不打算一上来就堆功能。对话能力、实时反应、AI 助手 这些都是后面的事。首期我准备先把最核心的一件事做好就够了：让用户上传一张照片，就能得到这个人的 Q 版形象，并且能在桌面上自然地动起来。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">所以最先要解决的问题是图像生成。普通的文生图模型给一张参考照片，画出来的人"一眼就不是那个人"，那种东西放在桌面上是没有意义的——我做这件事的意义就在于"是这个人"。后来反复对比，最理想的是 GPT-Image-2，它对人物特征的保真度很高，同一个人在不同动作下还能认得出来还是同一个人。当时这个模型刚出来不久，为了图便宜我最后通过 Evolink 中转通道接上了，接口规格基本一致。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">模型选好之后，我开始用 Claude Code 的 internal 版本叠加 CodeBuddy IDE，一边聊一边改，正式动手。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>让静态图先动起来</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">模型生成的是单张图片，不是动画。要让它"动"，得有帧。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">我的做法是让模型一次性画出整张精灵图（sprite sheet）：在 prompt 里讲清楚要画 8 个连续姿势、横向排成一排、3840×1280 分辨率、每帧 480 像素宽（绿幕背景，方便抠图）。生成完之后再用 Canvas 按等宽切成 8 张独立的 PNG，分别落到对应动作的文件夹下。</p>
+
+  <figure style="margin:32px 0; text-align:center" align="center">
+    <img src="https://my-pet-heart.vercel.app/today.jpg" alt="模型生成的 8 帧 sprite sheet 横排示意" style="max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF">
+    <figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; font-style:italic; line-height:1.6; padding:0 8px">模型一次画出 8 帧，横向排成一排，再切成单帧落到 idle / walk / sleep / ... 各自的文件夹下。</figcaption>
+  </figure>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">第一次跑通的时候我上传的是一张自己的照片。等了几分钟，屏幕上出现了一个戴马尾、挎着黄色小包的 Q 版小女孩，站在透明背景上做着 idle 动作——眨眼、转头、左右晃，动作还挺像那么回事，就是看着比本人可爱多了。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>让它有自己的情绪</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">光有帧只能让单个动作循环播放，要让它真的"活"起来，得有一套状态机决定它什么时候在做什么。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">我希望它有自己的小情绪。鼠标长时间不动的时候，它会自己走起来散步；走累了会偶尔停下张望四周；很久没人理它就进入睡眠；睡得太久偶尔会变成"难过"的表情；点它一下会蹦跳着表示开心；想拖动它的时候会摆出委屈脸；只要用户重新开始活动，它就会自动回到默认状态。看起来很像一只小猫的作息。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">虽然写一个状态机本身并不难，但边界情况判定还是有点烦人。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">让我印象最深的一个 bug 是这样的：走路的时候右键打开菜单切换动作，桌宠会瞬间往右下角跳 220 像素。我调了一下午才搞清楚根因——打开右键菜单的时候，窗口本身需要扩大并向左上偏移 220px 的 padding，这样视觉上桌宠不动、菜单从桌宠右侧弹出来才有空间。但走路用的 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>requestAnimationFrame</code> 循环还在跑，每一帧都把窗口位置覆写回原来的坐标，结果桌宠就落在了一个"带着 padding 的窗口里、又偏移了整整 220px"的错位位置上。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">修复方案最后只有几行——打开菜单前先把走路停掉，关菜单后如果状态仍是 walk 再恢复。但找到这几行的过程，是我先后看着桌宠在屏幕上瞬移了几十次。这是异步、setPosition、React state 三股力量在同一个时间窗口里抢占窗口位置造成的事故。类似的隐性边界后面又遇到过好几个，每一个都要花时间慢慢摸清楚。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">开发那段时间，这只桌宠在我屏幕上演过的奇怪姿势——瞬移、抽搐、横着飘、卡在 Dock 里、动作切到一半凝固——比它最后正式上线会做的动作集还要丰富一些。。。。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>它都会做什么</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">正式收编之后，桌宠定下了 7 套基础动作，每一套都是一组 6-8 帧的循环序列。状态机会根据"用户在不在、闲了多久、有没有被点、被不被理"来决定它当下该做什么。下面这些都是 main 形象的真实帧，鼠标移上去会更精神一点。</p>
+
+  <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:18px 14px; margin:28px 0 36px">
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/idle.gif" alt="发呆" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">发呆<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">idle</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">默认基线<br>偶尔眨眼晃头</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/happy.gif" alt="开心" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">开心<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">happy</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">被点击时<br>蹦跳一下</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/walk.gif" alt="走路" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">走路<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">walk</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">闲置 1-2 分钟<br>自己散步</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/looking_around.gif" alt="张望" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">张望<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">looking_around</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">走累了 30%<br>停下看四周</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/sleep.gif" alt="睡觉" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">睡觉<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">sleep</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">闲置 5 分钟+<br>蜷起来打呼</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/stretch.gif" alt="伸懒腰" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">伸懒腰<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">stretch</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">用户回来<br>从睡觉里起床</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC"><img src="https://my-pet-heart.vercel.app/blog-actions/sad.gif" alt="难过" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain"></div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">难过<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">sad</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">被冷落太久<br>偶尔表现委屈</div>
+    </div>
+
+    <div style="background:#FBF7EF; border:1px solid #E8DFD0; border-radius:4px; padding:14px 8px 12px; text-align:center; transition:transform 0.25s ease, box-shadow 0.25s ease; position:relative" align="center">
+      <div style="width:96px; height:96px; margin:0 auto 8px; display:flex; align-items:center; justify-content:center; background:#FFF; border-radius:50%; border:1px dashed #E0D3BC">
+        <img src="https://my-pet-heart.vercel.app/blog-actions/drag.gif" alt="被拖动" style="width:84px; height:84px; image-rendering:crisp-edges; object-fit:contain">
+      </div>
+      <div style="font-size:15.5px; font-weight:600; color:#2A2422; letter-spacing:0.5px; margin-bottom:3px">被拖动<span style="display:block; font-size:11px; font-weight:400; color:#B8A99A; font-style:italic; letter-spacing:0.5px; margin-top:1px">drag</span>
+</div>
+      <div style="font-size:12.5px; color:#8A7E72; line-height:1.5; margin-top:6px; padding:0 4px">按住拖拽时<br>整个被拎起来</div>
+    </div>
+  </div>
+
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">这 8 个动作之间不是随便切换，而是绑在一张状态机上跑：默认停在 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>idle</code>，闲置时间累积到一定值会自动进 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>walk</code>、<code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>sleep</code>，被点击会跳 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>happy</code>，睡得太久会偶尔出 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>sad</code>，用户一回来又会 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>stretch</code> 起床。状态机本身不复杂，但要把每条边的边界条件都调舒服，反而是开发里最磨人的那部分。</p>
+
+  <figure style="margin:32px 0; text-align:center" align="center">
+    <img src="https://my-pet-heart.vercel.app/%E5%8A%A8%E4%BD%9C%E5%88%87%E6%8D%A2.jpg" alt="桌宠状态机的动作切换示意" style="max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF">
+    <figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; font-style:italic; line-height:1.6; padding:0 8px">idle 居中作为基线，7 个动作沿着颜色编码的迁移路径切换。橙=用户主动、灰=自动 AFK、绿=动画播完。</figcaption>
+  </figure>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>不只是我一个人</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">既然能生成"我自己"的 Q 版形象，那当然也可以是家人、朋友、宠物。我做了一个形象管理面板，让所有形象都能并存：上传不同的照片可以生成多个独立的形象，每个形象都有自己的动作帧；右键菜单可以一键切换；每个形象都可以重命名、可以删除；文件结构是一形象一文件夹，互相不打扰，存放在 <code style='background:#F2EADC; color:#8B5A3C; padding:2px 6px; border-radius:3px; font-family:"SF Mono", "Menlo", "Consolas", "Courier New", monospace; font-size:0.88em; border:1px solid #E8DFD0'>~/Library/Application Support/com.desktop-pet.app/avatars/</code> 下面。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">我后来一口气测试了好几个形象——一个戴马尾的小女孩、一个戴帽子喝咖啡的老爷爷、一只表情慵懒的橘猫、还有初音未来。每一个跑出来都比想象中要可爱。这种"任何照片都能变成 Q 版"的感觉，比我最初设想的应用场景要丰富很多。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>给它做一个家</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">App 完成之后总得有个让人能下载、能了解的地方。我做了一个简单的网站首页，用 Vercel 部署在 <a href="https://my-pet-heart.vercel.app/" target="_blank" rel="noopener" style="color:#C4704B; text-decoration:none; border-bottom:1px solid rgba(196, 112, 75, 0.4); padding-bottom:1px; transition:border-color 0.2s ease">my-pet-heart.vercel.app</a>。</p>
+
+  <figure style="margin:32px 0; text-align:center" align="center">
+    <img src="https://my-pet-heart.vercel.app/welcomepage.jpg" alt="网站首页 hero 屏截图" style="max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF">
+    <figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; font-style:italic; line-height:1.6; padding:0 8px">暖墨手账风的首屏：一句标语、一个站立的角色、一个下载按钮。让到访的人一眼就能看出这是什么、能拿走什么。</figcaption>
+  </figure>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">整个网站延续了 App 本身的暖墨手账风格，整屏 snap-scroll 吸附往下滚，每一屏只讲一件事。首屏一句话标语配着一只大角色，旁边摆着 7 个动作小卡——鼠标 hover 上去哪一个，主角就实时切换播放对应的动画，像在跟你打招呼。第二屏是手绘 SVG 画的三步流程：上传照片、AI 绘制、桌面陪伴。第三屏是 5 张稍稍倾斜散落的拍立得卡片，每一张里都循环播放着一个角色的 idle 帧——小女孩、老爷爷、小猫、初音未来、emoji 占位——专门用来打消"是不是只能用作者自己的形象"的疑虑。第四屏模拟了一个 Mac 桌面，桌宠在右下角自动演示几种行为，闲置走两步、不动了去睡觉、点击会开心、走累了张望一下。第五屏是下载入口。</p>
+
+  <figure style="margin:32px 0; text-align:center" align="center">
+    <img src="https://my-pet-heart.vercel.app/welcomepage2.jpg" alt="网站第四屏：模拟 Mac 桌面演示桌宠行为" style="max-width:100%; height:auto; display:block; margin:0 auto; border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF">
+    <figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; font-style:italic; line-height:1.6; padding:0 8px">第四屏模拟一个真实的 Mac 桌面，桌宠在右下角自动循环演示走路、睡觉、开心、张望几种行为，让访客直观看到 App 装上之后的样子。</figcaption>
+  </figure>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">为了让拍立得卡里的每一个角色都真的"活着"，我让每张卡片在 mount 的时候一次性把所有帧预加载到浏览器缓存里，避免切帧的瞬间闪烁。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">整个网站还藏了一些不显眼的小心思——主标题下面是手绘风的波浪线下划线，背景里飘着小星星和小心，卡片轻微旋转着 1-2°（像贴纸贴歪了），鼠标 hover 时它们会回正、轻轻抬起一点点。每一个细节都不大，但叠在一起，整个网站就有了一种"案头小物件"的感觉，而不是又一个标准的 SaaS 落地页。</p>
+
+  <aside style="margin:28px 0 8px; padding:22px 24px 24px; background:#FBF6EB; border:1px solid #E8DFD0; border-left:3px solid #C9A36B; border-radius:6px">
+    <div style='font-family:"Noto Serif SC", "Songti SC", serif; font-size:15px; color:#5A4A3C; margin:0 0 6px; letter-spacing:0.5px'>第一次安装的小提示</div>
+    <p style="margin:0 0 18px; color:#6E6356; text-align:justify; text-justify:inter-ideograph; font-size:14px; line-height:1.75" align="justify">因为我没有买 Apple 开发者证书来给安装包做签名，第一次双击打开的时候 macOS 会拦一下，跟着下面三步就能放它进来。</p>
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px">
+      <div style="background:#FFFDF8; border:1px solid #ECE3D2; border-radius:5px; padding:14px 12px 16px; display:flex; flex-direction:column; align-items:center; text-align:center" align="center">
+        <div style="width:22px; height:22px; line-height:22px; border-radius:50%; background:#C9A36B; color:#FFFDF8; font-size:12px; font-weight:600; margin-bottom:10px; letter-spacing:0">1</div>
+        <img src="https://my-pet-heart.vercel.app/%E9%AA%8C%E8%AF%811.jpg" alt="第一次打开时弹出的拦截提示" style="width:100%; height:150px; object-fit:contain; background:#F6EFE0; border-radius:3px; border:1px solid #EFE7D6">
+        <div style="margin-top:10px; font-size:13px; color:#6E6356; line-height:1.65; font-style:italic">
+<b style="font-style:normal; color:#4A3F33; font-weight:600">会先弹出这个</b><br>系统说"无法检查是否包含恶意软件"，先点取消，不用慌。</div>
+      </div>
+      <div style="background:#FFFDF8; border:1px solid #ECE3D2; border-radius:5px; padding:14px 12px 16px; display:flex; flex-direction:column; align-items:center; text-align:center" align="center">
+        <div style="width:22px; height:22px; line-height:22px; border-radius:50%; background:#C9A36B; color:#FFFDF8; font-size:12px; font-weight:600; margin-bottom:10px; letter-spacing:0">2</div>
+        <img src="https://my-pet-heart.vercel.app/%E9%AA%8C%E8%AF%812.jpg" alt="系统设置 - 隐私与安全性 - 仍要打开" style="width:100%; height:150px; object-fit:contain; background:#F6EFE0; border-radius:3px; border:1px solid #EFE7D6">
+        <div style="margin-top:10px; font-size:13px; color:#6E6356; line-height:1.65; font-style:italic">
+<b style="font-style:normal; color:#4A3F33; font-weight:600">去「系统设置 → 隐私与安全性」</b><br>往下滑，会看到桌宠那一行，点右边的「仍要打开」。</div>
+      </div>
+      <div style="background:#FFFDF8; border:1px solid #ECE3D2; border-radius:5px; padding:14px 12px 16px; display:flex; flex-direction:column; align-items:center; text-align:center" align="center">
+        <div style="width:22px; height:22px; line-height:22px; border-radius:50%; background:#C9A36B; color:#FFFDF8; font-size:12px; font-weight:600; margin-bottom:10px; letter-spacing:0">3</div>
+        <img src="https://my-pet-heart.vercel.app/%E9%AA%8C%E8%AF%813.jpg" alt="再次确认对话框，点击仍要打开" style="width:100%; height:150px; object-fit:contain; background:#F6EFE0; border-radius:3px; border:1px solid #EFE7D6">
+        <div style="margin-top:10px; font-size:13px; color:#6E6356; line-height:1.65; font-style:italic">
+<b style="font-style:normal; color:#4A3F33; font-weight:600">最后再确认一次</b><br>系统会再问一遍，点「仍要打开」、输入开机密码，就装好了。</div>
+      </div>
+    </div>
+  </aside>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>关于技术选型</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">简单聊几句。桌宠这类应用的需求其实有点奇怪——它要常驻桌面但不能像普通 App 那样在 Dock 里占一个图标，要透明背景让形象抠图后能贴在桌面上，要让鼠标点击穿透过去（点桌面其他地方不能被挡），要永远置顶但又不能霸屏。最关键的是它得轻——毕竟这东西要 24 小时挂着的。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">如果用 Electron，光启动就要吃掉几十 MB 内存，跟我"陪伴"的初衷完全背道而驰，反而成了一种负担。所以最后选了 Tauri，Rust 加 WebView 的组合。前端继续用 React 加 TypeScript（写得最熟），状态机、动画、UI 这些全在 webview 里跑；窗口管理、跨工作区显示、把窗口 level 设到 1500 让它浮在所有空间之上、监听用户空闲时间这些跟系统打交道的事，交给 Rust 处理。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">最终打包出来的 .dmg 只有 7.2 MB。这个数字让我满意了一会儿。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">网站首页是独立项目独立部署，技术栈一致：Vite、React、TypeScript，没有什么特别的理由——就是写起来顺手。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>写到这里</h2>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">整个项目我花了周五一个晚上加周六白天来做。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">我后来想了想为什么自己愿意在一只屏幕上的小角色身上花这么多时间。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">大概就是，我少女时代的英雄主义，总是想成为一个可以靠写代码实现自己想法的人，总是去为人们的需求创造出解决方案。那时候这件事看起来还很远。</p>
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">现在，我终于成为了一个可以靠自己写的代码实现自己想法的人了。</p>
+  <p style="margin:0 0 18px; color:#C4704B; text-align:center; text-justify:inter-ideograph; margin-top:28px; font-size:17px; letter-spacing:4px" align="center">关关难过关关过。</p>
+
+  <div style="text-align:center; margin:44px 0; color:#C4704B; letter-spacing:14px; font-size:14px; user-select:none" align="center">· · ·</div>
+
+  <h2 style="font-size:21px; font-weight:600; color:#2A2422; margin:56px 0 18px; letter-spacing:0.3px; position:relative; "><span style="display:inline-block; width:3px; height:18px; background:#C4704B; border-radius:1px; vertical-align:-3px; margin-right:12px;"></span>链接</h2>
+  <ul style="padding-left:0; list-style:none; margin:0 0 18px">
+    <li style="padding-left:20px; position:relative; margin-bottom:8px"><span style="color:#C4704B; font-weight:600; margin-right:10px;">—</span>
+<strong style="font-weight:600; color:#2A2422">网站首页</strong>：<a href="https://my-pet-heart.vercel.app/" target="_blank" rel="noopener" style="color:#C4704B; text-decoration:none; border-bottom:1px solid rgba(196, 112, 75, 0.4); padding-bottom:1px; transition:border-color 0.2s ease">my-pet-heart.vercel.app</a>
+</li>
+    <li style="padding-left:20px; position:relative; margin-bottom:8px"><span style="color:#C4704B; font-weight:600; margin-right:10px;">—</span>
+<strong style="font-weight:600; color:#2A2422">桌宠 App 仓库</strong>：<a href="https://github.com/ristar-h/desktop-pet" target="_blank" rel="noopener" style="color:#C4704B; text-decoration:none; border-bottom:1px solid rgba(196, 112, 75, 0.4); padding-bottom:1px; transition:border-color 0.2s ease">github.com/ristar-h/desktop-pet</a>
+</li>
+  </ul>
+
+  <p style="margin:0 0 18px; color:#3F3936; text-align:justify; text-justify:inter-ideograph" align="justify">如果你也想让桌面多一个小生命陪你，欢迎试试看。上传一张你喜欢的照片，让 TA 也来你的桌面。</p>
+
+  <div style="margin-top:64px; padding-top:28px; border-top:1px dashed #D8CDB9; text-align:center; color:#9A8E82; font-size:13px; font-style:italic; letter-spacing:0.5px" align="center">— 写于一个周末的尾巴 —</div>
+
+</article>
+
+
+
+</body>
+</html>
