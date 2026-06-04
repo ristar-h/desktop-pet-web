@@ -143,34 +143,18 @@ def build_forum_html(gif_paths: dict[str, Path]) -> Path:
         new_html, n = pattern.subn(f'src="{url}"', new_html)
         print(f"  替换 {fname:24s} -> {url}  ({n} 处)")
 
-    # 3) 把演示视频整段替换成「封面图 + 链接」结构。
-    #    KM / 大多数论坛会把 <video> 标签整体过滤掉，没法原地播放；
-    #    退化成「带播放按钮的封面图，点击跳转到 Vercel 网站观看」最稳。
-    poster_url = public_url("演示视频封面.jpg")
-    video_url = public_url("演示视频.mp4")
-    site_url = f"{PUBLIC_BASE_URL}/"
+    # 3) 把演示视频整段替换成「自动播放的 GIF」（KM / 大多数论坛 / 微信公众号都禁
+    #    <video> 标签，但都支持 <img src=".gif"> 自动循环。GIF 是兼容性最好的方案）。
+    poster_url = public_url("演示动图.gif")
     demo_block = (
         f'<figure style="margin:32px 0; text-align:center;">'
-        f'<a href="{video_url}" target="_blank" rel="noopener" '
-        f'style="display:inline-block; position:relative; max-width:100%; text-decoration:none;">'
-        f'<img src="{poster_url}" alt="演示视频封面" '
+        f'<img src="{poster_url}" alt="桌宠真机演示动图" '
         f'style="max-width:100%; height:auto; display:block; margin:0 auto; '
         f'border-radius:4px; border:1px solid #E8DFD0; background:#FBF7EF;">'
-        # 中央播放图标（圆 + 三角）用纯 inline 样式画
-        f'<span style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); '
-        f'width:72px; height:72px; border-radius:50%; background:rgba(0,0,0,0.55); '
-        f'box-shadow:0 4px 14px rgba(0,0,0,0.25);"></span>'
-        f'<span style="position:absolute; top:50%; left:50%; '
-        f'transform:translate(-40%,-50%); width:0; height:0; '
-        f'border-left:20px solid #FFFDF8; border-top:13px solid transparent; '
-        f'border-bottom:13px solid transparent;"></span>'
-        f'</a>'
         f'<figcaption style="margin-top:12px; color:#8A7E72; font-size:13px; '
         f'font-style:italic; line-height:1.6; padding:0 8px;">'
-        f'真机演示：上传照片生成 Q 版形象、切换形象、走路 / 睡觉 / 开心 / 拖拽 等状态在桌面上的实际表现。'
-        f'<br>（点上图可在新窗口播放视频；也可以直接访问 '
-        f'<a href="{site_url}" target="_blank" rel="noopener" '
-        f'style="color:#C4704B; border-bottom:1px solid rgba(196,112,75,0.3);">my-pet-heart.vercel.app</a>）'
+        f'真机演示：桌宠在 macOS 桌面右下角的实际表现 — 闲了走两步、累了张望、'
+        f'点击会蹦跳，整个上班的过程都有它陪着。'
         f'</figcaption></figure>'
     )
     # 用宽松匹配（class 已被 BLOG.html 写死，但这里还没经过 premailer，所以仍带 class）
@@ -233,6 +217,16 @@ def inline_all_css(html: str) -> str:
     # KM 论坛的 HTML 白名单不识别 <figcaption> 标签，导致图说没样式 / 直接被剥掉。
     # 把所有 figcaption 换成 <p>（基础标签 100% 兼容），并赋予更显眼的图说样式。
     inlined = convert_figcaption_to_p(inlined)
+    # @media 移动端断点被剥掉后，桌面端的 4 列 / 3 列网格在论坛 / 微信预览的窄屏里
+    # 会挤成一团。论坛阅读以手机为主，强制把宽网格换成移动端友好的窄网格。
+    inlined = inlined.replace(
+        "grid-template-columns:repeat(4, 1fr)",
+        "grid-template-columns:repeat(2, 1fr)",
+    )
+    inlined = inlined.replace(
+        "grid-template-columns:repeat(3, 1fr)",
+        "grid-template-columns:1fr",
+    )
     print("  CSS 已全部内联到 style=\"\" 属性")
     return inlined
 
