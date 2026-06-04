@@ -101,6 +101,7 @@ EXTRA_FIGURES = [
     "验证1.jpg",
     "验证2.jpg",
     "验证3.jpg",
+    "全家福.jpg",
 ]
 
 
@@ -229,8 +230,27 @@ def inline_all_css(html: str) -> str:
     # 论坛环境不支持 ::before / ::after 等伪元素，把原本靠伪元素绘制的
     # 小装饰用真实节点补回来：h2 前面的暖橘竖线、<li> 前面的破折号。
     inlined = restore_pseudo_decorations(inlined)
+    # KM 论坛的 HTML 白名单不识别 <figcaption> 标签，导致图说没样式 / 直接被剥掉。
+    # 把所有 figcaption 换成 <p>（基础标签 100% 兼容），并赋予更显眼的图说样式。
+    inlined = convert_figcaption_to_p(inlined)
     print("  CSS 已全部内联到 style=\"\" 属性")
     return inlined
+
+
+def convert_figcaption_to_p(html: str) -> str:
+    """把 <figcaption ...> 替换为带图说样式的 <p>，</figcaption> 替换为 </p>。"""
+    caption_style = (
+        "margin:14px auto 0; max-width:560px; text-align:center; "
+        "color:#6E6259; font-size:14px; font-style:italic; "
+        "line-height:1.65; padding:0 12px;"
+    )
+    html = re.sub(
+        r"<figcaption\b[^>]*>",
+        f'<p style="{caption_style}">',
+        html,
+    )
+    html = html.replace("</figcaption>", "</p>")
+    return html
 
 
 def restore_pseudo_decorations(html: str) -> str:
@@ -261,6 +281,266 @@ def restore_pseudo_decorations(html: str) -> str:
     return html
 
 
+def build_km_html() -> Path:
+    """从 BLOG_forum.html 派生一个『KM 上传指引版』。
+
+    KM 论坛会过滤所有外部域名的 <img>，必须用 KM 编辑器手动上传图片。
+    这一版把每个 <img> 替换成红色虚线占位框，框里写清"应该在这里插入哪张图、
+    本地路径在哪"，方便用户对照着 public/ 里的文件逐张上传。
+    """
+    src = (ROOT / "BLOG_forum.html").read_text(encoding="utf-8")
+
+    counter = {"n": 0}
+
+    # public/ 下文件 → 友好说明
+    file_hints = {
+        "today.jpg": "8 帧精灵图（today.jpg，约 130 KB）",
+        "动作切换.jpg": "状态机示意图（动作切换.jpg，约 300 KB）",
+        "welcomepage.jpg": "网站首页第一屏（welcomepage.jpg）",
+        "welcomepage2.jpg": "网站第四屏 / 桌面演示（welcomepage2.jpg）",
+        "验证1.jpg": "第一次安装的拦截弹窗（验证1.jpg）",
+        "验证2.jpg": "系统设置 → 仍要打开（验证2.jpg）",
+        "验证3.jpg": "二次确认对话框（验证3.jpg）",
+        "演示视频封面.jpg": "演示视频封面图（演示视频封面.jpg）",
+        "演示视频.mp4": "真机演示视频（演示视频.mp4，约 1.9 MB）",
+    }
+
+    def make_placeholder(filename: str, friendly: str) -> str:
+        counter["n"] += 1
+        idx = counter["n"]
+        return (
+            f'<div style="margin:24px auto; padding:24px 20px; '
+            f'border:2px dashed #C4704B; border-radius:6px; '
+            f'background:#FFF5EB; text-align:center; max-width:560px;">'
+            f'<div style="font-size:13px; color:#C4704B; font-weight:600; '
+            f'letter-spacing:1px; margin-bottom:8px;">📌 占位 {idx:02d}</div>'
+            f'<div style="font-size:15px; color:#5A4A3C; line-height:1.7; '
+            f'margin-bottom:6px;">请在此处用 KM 编辑器「插入图片」上传：</div>'
+            f'<div style="font-size:14px; color:#8A6A4A; '
+            f'font-family:Menlo,Consolas,monospace;">{friendly}</div>'
+            f'<div style="font-size:12px; color:#9C8B7A; margin-top:8px;">'
+            f'本地路径：<code>desktop-pet-web/public/{filename}</code></div>'
+            f'</div>'
+        )
+
+    # 1) 先处理演示视频整段 <figure>（含封面图 + 跳转链接），替换成单一视频占位
+    #    必须先于 img 替换执行，否则内部封面图会先被识别为图片占位、再被视频整段覆盖，
+    #    造成 placeholder 编号被多算一个。
+    video_block_pattern = re.compile(
+        r'<figure[^>]*>\s*<a[^>]*href="https://my-pet-heart\.vercel\.app/[^"]*\.mp4[^"]*"[^>]*>.*?</figure>',
+        flags=re.DOTALL,
+    )
+
+    def make_video_placeholder(_m: re.Match) -> str:
+        counter["n"] += 1
+        idx = counter["n"]
+        return (
+            f'<div style="margin:32px auto; padding:28px 24px; '
+            f'border:2px dashed #C4704B; border-radius:6px; '
+            f'background:#FFF5EB; text-align:center; max-width:600px;">'
+            f'<div style="font-size:13px; color:#C4704B; font-weight:600; '
+            f'letter-spacing:1px; margin-bottom:10px;">🎬 占位 {idx:02d} · 演示视频</div>'
+            f'<div style="font-size:15px; color:#5A4A3C; line-height:1.7; '
+            f'margin-bottom:8px;">如 KM 允许上传视频：用 KM 编辑器直接上传 '
+            f'<code style="font-family:Menlo,Consolas,monospace;">演示视频.mp4</code>。</div>'
+            f'<div style="font-size:14px; color:#6E6356; line-height:1.7; '
+            f'margin-bottom:8px;">如果 KM 不允许视频：用「插入图片」上传 '
+            f'<code style="font-family:Menlo,Consolas,monospace;">演示视频封面.jpg</code>，'
+            f'并把它做成超链接，跳转到下面这个地址：</div>'
+            f'<div style="font-size:13px; color:#C4704B; word-break:break-all;">'
+            f'https://my-pet-heart.vercel.app/</div>'
+            f'<div style="font-size:12px; color:#9C8B7A; margin-top:10px; '
+            f'line-height:1.6;">真机演示：上传照片生成 Q 版形象、切换形象、走路 / 睡觉 / 开心 / 拖拽 等状态在桌面上的实际表现。</div>'
+            f'</div>'
+        )
+
+    out = video_block_pattern.sub(make_video_placeholder, src)
+
+    # 2) 替换剩下的所有 vercel <img>（动作 GIF + 普通插图）
+    def repl_vercel_img(m: re.Match) -> str:
+        url = m.group(0)
+        from urllib.parse import unquote
+        path = unquote(url).split("my-pet-heart.vercel.app/", 1)[1]
+        fname = path.split("/")[-1]
+        # 动作 GIF 用动作名称
+        if path.startswith("blog-actions/"):
+            action = fname.replace(".gif", "")
+            friendly = f"{action} 动作 GIF（public/blog-actions/{fname}）"
+            return make_placeholder(f"blog-actions/{fname}", friendly)
+        friendly = file_hints.get(fname, fname)
+        return make_placeholder(fname, friendly)
+
+    def repl_img_tag(m: re.Match) -> str:
+        img_tag = m.group(0)
+        src_match = re.search(r'src="(https://my-pet-heart\.vercel\.app/[^"]+)"', img_tag)
+        if not src_match:
+            return img_tag
+        return repl_vercel_img(src_match)
+
+    out = re.sub(r'<img\b[^>]*src="https://my-pet-heart\.vercel\.app[^"]*"[^>]*>',
+                 repl_img_tag, out)
+
+    # 3) 在最开头加一个使用说明卡片
+    intro = (
+        '<div style="margin:0 auto 28px; padding:18px 22px; max-width:600px; '
+        'background:#FFFAF0; border:1px solid #E8DFD0; border-left:4px solid #C4704B; '
+        'border-radius:4px; font-size:14px; line-height:1.75; color:#5A4A3C;">'
+        f'<div style="font-weight:600; margin-bottom:6px;">📋 KM 论坛上传说明（共 {counter["n"]} 处占位）</div>'
+        '本文里的所有图片 / 视频已被换成红色虚线占位框。粘贴到 KM 编辑器后，请按占位框里写的「本地路径」'
+        '和「占位编号」从 <code style="font-family:Menlo,Consolas,monospace;">desktop-pet-web/public/</code> 里逐张上传。'
+        '上传完一张后，把对应的占位框整段删掉即可。'
+        '<br><span style="color:#9C8B7A; font-size:12px;">这一步因为 KM 不允许外部域名图片，所以图片必须用 KM 编辑器内置的"插入图片"上传到 KM 自己的图床。</span>'
+        '</div>'
+    )
+    # 把 intro 插在第一个 <h1> 之前
+    out = out.replace('<h1', intro + '<h1', 1)
+
+    out_path = ROOT / "BLOG_km.html"
+    out_path.write_text(out, encoding="utf-8")
+    print(f"\nKM 上传指引版 -> {out_path.name}  ({counter['n']} 个占位框)")
+    return out_path
+
+
+def build_wechat_html(gif_paths: dict[str, Path]) -> Path:
+    """生成微信公众号排版版 'BLOG_forum copy.html'。
+
+    特点：
+    - 排版风格按公众号习惯：系统字体、17px 字号、1.95 行高、24px 段间距、移动端为主
+    - 所有 CSS 全部 inline（公众号会剥 <style> 和 class）
+    - 图片用 base64 内联保留：公众号 PC 编辑器粘贴 base64 图片时会自动识别并上传到素材库
+    - 视频换成"占位提示卡"：公众号不接受任何 <video>，必须用编辑器顶部「视频」按钮单独插入
+    - h2 装饰用真实 span 节点（::before 公众号也不支持）
+    """
+    src_html = (ROOT / "BLOG.html").read_text(encoding="utf-8")
+
+    # 1) 在原 <style> 末尾追加一份「公众号风格覆盖」CSS，CSS 后定义优先级更高
+    wechat_overrides = """
+/* === 公众号专用覆盖：移动端友好 / 系统字体 / 大字号大段距 === */
+html, body {
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif !important;
+  font-size: 17px !important;
+  line-height: 1.95 !important;
+  background: #FFFFFF !important;
+}
+.article {
+  max-width: 100% !important;
+  padding: 24px 0 60px !important;
+}
+h1.title {
+  font-size: 26px !important;
+  letter-spacing: 1px !important;
+  margin: 0 0 14px !important;
+}
+.meta {
+  font-size: 13px !important;
+  margin: 0 0 40px !important;
+  letter-spacing: 0.5px !important;
+}
+h2 {
+  font-size: 21px !important;
+  margin-top: 56px !important;
+  margin-bottom: 18px !important;
+  padding-left: 0 !important;
+  letter-spacing: 0.5px !important;
+}
+p {
+  margin: 0 0 24px !important;
+  letter-spacing: 0.3px !important;
+  text-align: justify !important;
+}
+.divider {
+  margin: 44px 0 !important;
+  letter-spacing: 18px !important;
+  font-size: 13px !important;
+}
+code {
+  font-size: 14.5px !important;
+  padding: 1px 6px !important;
+  background: #F6EFE0 !important;
+}
+a {
+  color: #C4704B !important;
+  border-bottom: 1px solid rgba(196, 112, 75, 0.3) !important;
+}
+.actions-grid {
+  /* 公众号容器宽度有限，4 列改 2 列 */
+  grid-template-columns: repeat(2, 1fr) !important;
+  gap: 16px 12px !important;
+}
+.install-guide .ig-steps {
+  /* 同理，3 列改 1 列堆叠 */
+  grid-template-columns: 1fr !important;
+  gap: 14px !important;
+}
+.install-guide .ig-step img {
+  height: auto !important;
+  max-height: 240px !important;
+}
+"""
+    src_html = src_html.replace("</style>", wechat_overrides + "\n</style>", 1)
+
+    # 2) 把动作 GIF 的 <img data-action="xxx"> 替换为 base64 内联
+    def replace_action_img(m: re.Match) -> str:
+        full = m.group(0)
+        action = m.group("action")
+        if action not in gif_paths:
+            return full
+        data_uri = to_data_uri(gif_paths[action])
+        cleaned = re.sub(r'\s+data-(action|frames|fps)="[^"]*"', "", full)
+        if 'src="' in cleaned:
+            cleaned = re.sub(r'\s+src="[^"]*"', "", cleaned)
+        return cleaned.replace("<img", f'<img src="{data_uri}"', 1)
+
+    new_html = re.sub(
+        r'<img[^>]*data-action="(?P<action>[^"]+)"[^>]*>',
+        replace_action_img,
+        src_html,
+    )
+
+    # 3) 普通插图：base64 内联
+    for fname in EXTRA_FIGURES:
+        fpath = ROOT / "public" / fname
+        if not fpath.exists():
+            continue
+        data_uri = to_data_uri(fpath)
+        pattern = re.compile(rf'src=["\']{re.escape(fname)}["\']')
+        new_html = pattern.sub(f'src="{data_uri}"', new_html)
+
+    # 4) 演示视频整段替换为「公众号视频组件提示」
+    video_placeholder = (
+        '<section style="margin:32px auto; padding:24px 20px; '
+        'border:2px dashed #C4704B; border-radius:6px; '
+        'background:#FFF5EB; text-align:center;">'
+        '<p style="margin:0 0 10px; font-size:13px; color:#C4704B; '
+        'font-weight:600; letter-spacing:1px;">🎬 这里要插入演示视频</p>'
+        '<p style="margin:0 0 8px; font-size:15px; color:#5A4A3C; line-height:1.7;">'
+        '请用公众号编辑器顶部工具栏的「视频」按钮插入。</p>'
+        '<p style="margin:0 0 8px; font-size:14px; color:#6E6356; line-height:1.7;">'
+        '推荐做法：先把 <code style="font-family:Menlo,monospace; background:#F6EFE0; padding:1px 6px;">演示视频.mp4</code> '
+        '上传到腾讯视频，公众号视频选择器里搜索后插入。</p>'
+        '<p style="margin:0; font-size:13px; color:#9C8B7A; line-height:1.6;">'
+        '真机演示：上传照片生成 Q 版形象、切换形象、走路 / 睡觉 / 开心 / 拖拽 等状态在桌面上的实际表现。</p>'
+        '</section>'
+    )
+    new_html = re.sub(
+        r'<figure\s+class="demo-video">.*?</figure>',
+        video_placeholder,
+        new_html,
+        flags=re.DOTALL,
+    )
+
+    # 5) 去 <script>
+    new_html = re.sub(r"<script\b[^>]*>.*?</script>", "", new_html, flags=re.DOTALL)
+
+    # 6) premailer 内联所有 CSS、去 class、去残留 <style>、补回伪元素装饰
+    new_html = inline_all_css(new_html)
+
+    out_path = ROOT / "BLOG_forum copy.html"
+    out_path.write_text(new_html, encoding="utf-8")
+    print(f"\n微信公众号排版版 -> {out_path.name}  ({out_path.stat().st_size/1024:5.1f} KB)")
+    return out_path
+
+
 def main() -> None:
     print("生成 GIF：")
     gif_paths: dict[str, Path] = {}
@@ -268,6 +548,8 @@ def main() -> None:
         gif_paths[action] = build_gif(action, frames, fps)
 
     build_forum_html(gif_paths)
+    build_km_html()
+    build_wechat_html(gif_paths)
     print("\n完成。")
 
 
